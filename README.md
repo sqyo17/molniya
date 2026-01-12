@@ -11,6 +11,11 @@
 It is designed for **database administrators, developers, and automation scripts**.
 
 ---
+## Dependencies
+
+*   Rust >= 1.70
+*   MySQL server or compatible (MariaDB, etc)
+*   .sql.gz backups
 
 ## Installation
 
@@ -31,18 +36,18 @@ molniya --version
 
 Molniya uses environment variables to connect to MySQL:
 
-| Variable       | Default | Description                 |
-|----------------|---------|-----------------------------|
-| `MYSQL_USER`   | None    | MySQL username (required)   |
-| `MYSQL_PASSWORD` | empty | MySQL password             |
+| Variable       | Default   | Description                 |
+|----------------|-----------|-----------------------------|
+| `MYSQL_USER`   | root      | MySQL username (required)   |
+| `MYSQL_PASSWORD` | null      | MySQL password             |
 | `MYSQL_HOST`   | 127.0.0.1 | MySQL host               |
-| `MYSQL_PORT`   | 3306    | MySQL port                  |
+| `MYSQL_PORT`   | 3306      | MySQL port                  |
 
 You can set them in a `.env` file in the project folder:
 
 ```env
 MYSQL_USER=root
-MYSQL_PASSWORD=xxxxxx
+MYSQL_PASSWORD=
 MYSQL_HOST=127.0.0.1
 MYSQL_PORT=3306
 ```
@@ -58,9 +63,9 @@ molniya <COMMAND> [OPTIONS]
 ### Restore
 
 Restore a MySQL database from a backup folder:
-
+```
 molniya restore <BACKUP\_FOLDER> --db <DB\_NAME> \[--preset <PRESET>\] \[--dry-run\] \[--yes\]
-    
+``` 
 
 Option
 
@@ -137,9 +142,3 @@ cargo build --release
 ```
 cargo run -- restore path/to/folder/of/sql.qz --db mydb
 ```
-
-### Dependencies
-
-*   Rust >= 1.70
-*   MySQL server or compatible (MariaDB, Percona)
-*   .sql.gz backups
