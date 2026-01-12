@@ -69,12 +69,12 @@ molniya restore <BACKUP\_FOLDER> --db <DB\_NAME> \[--preset <PRESET>\] \[--dry-r
 
 Option
 
-| Option    | Description                                     |
-| --------- | ----------------------------------------------- |
-| --db      | Name of the database to restore                 |
-| --preset  | Use a preset to exclude tables                  |
-| --dry-run | Show what would be restored without changing DB |
-| --yes     | Skip confirmation prompt                        |
+| Option | Description                                     |
+| ----- | ----------------------------------------------- |
+| db    | Name of the database to restore                 |
+| preset | Use a preset to exclude tables                  |
+| dry-run | Show what would be restored without changing DB |
+| yes   | Skip confirmation prompt                        |
 
 ### Presets
 
@@ -128,17 +128,4 @@ molniya preset add mypreset
 molniya preset list
 molniya preset edit mypreset
 molniya preset remove mypreset
-```
-
-Development
------------
-
-### Build
-```
-cargo build --release
-```
-
-### Run Locally
-```
-cargo run -- restore path/to/folder/of/sql.qz --db mydb
 ```
