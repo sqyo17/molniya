@@ -13,6 +13,9 @@ pub fn handle(action: crate::cli::PresetCommand) -> Result<()> {
         crate::cli::PresetCommand::Add { name } => {
             add_preset(name)?;
         }
+        crate::cli::PresetCommand::Edit { name } => {
+            edit_preset(name)?;
+        }
         crate::cli::PresetCommand::Remove { name } => {
             remove_preset(name)?;
         }
@@ -62,5 +65,41 @@ pub fn remove_preset(name: String) -> anyhow::Result<()> {
         anyhow::bail!("Preset '{}' does not exist", name);
     }
 
+    Ok(())
+}
+
+fn edit_preset(name: String) -> Result<()> {
+    let mut cfg = load_config()?;
+
+    let preset = cfg.presets.get_mut(&name)
+        .ok_or_else(|| anyhow::anyhow!("Preset '{}' does not exist", name))?;
+
+    println!("Current excluded tables:");
+    if preset.exclude_tables.is_empty() {
+        println!("(none)");
+    } else {
+        for t in &preset.exclude_tables {
+            println!("- {}", t);
+        }
+    }
+
+    println!();
+    println!("Enter new tables to exclude (comma separated):");
+    print!("> ");
+    io::stdout().flush()?;
+
+    let mut input = String::new();
+    io::stdin().read_line(&mut input)?;
+
+    let exclude_tables = input
+        .split(',')
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty())
+        .collect();
+
+    preset.exclude_tables = exclude_tables;
+    save_config(&cfg)?;
+
+    println!("Preset '{}' updated", name);
     Ok(())
 }
