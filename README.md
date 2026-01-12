@@ -1,0 +1,145 @@
+# Molniya
+
+**Molniya** is a Rust-based CLI tool for restoring MySQL database backups with support for:
+
+- `.sql.gz` backups
+- Table exclusion presets
+- Dry-run mode for safe preview
+- Safety confirmation via `--yes`
+- Preset management (`add`, `edit`, `list`, `remove`)
+
+It is designed for **database administrators, developers, and automation scripts**.
+
+---
+
+## Installation
+
+### From Source
+
+```bash
+git clone https://github.com/sqyo17/molniya.git
+cd molniya
+cargo build --release
+sudo install -m 755 target/release/molniya /usr/local/bin/molniya
+```
+Verify
+```
+molniya --version
+```
+
+## Configuration
+
+Molniya uses environment variables to connect to MySQL:
+
+| Variable       | Default | Description                 |
+|----------------|---------|-----------------------------|
+| `MYSQL_USER`   | None    | MySQL username (required)   |
+| `MYSQL_PASSWORD` | empty | MySQL password             |
+| `MYSQL_HOST`   | 127.0.0.1 | MySQL host               |
+| `MYSQL_PORT`   | 3306    | MySQL port                  |
+
+You can set them in a `.env` file in the project folder:
+
+```env
+MYSQL_USER=root
+MYSQL_PASSWORD=xxxxxx
+MYSQL_HOST=127.0.0.1
+MYSQL_PORT=3306
+```
+
+## Usage
+
+Molniya has two main commands: `restore` and `preset`.
+
+```
+molniya <COMMAND> [OPTIONS]
+```
+
+### Restore
+
+Restore a MySQL database from a backup folder:
+
+molniya restore <BACKUP\_FOLDER> --db <DB\_NAME> \[--preset <PRESET>\] \[--dry-run\] \[--yes\]
+    
+
+Option
+
+| Option    | Description                                     |
+| --------- | ----------------------------------------------- |
+| --db      | Name of the database to restore                 |
+| --preset  | Use a preset to exclude tables                  |
+| --dry-run | Show what would be restored without changing DB |
+| --yes     | Skip confirmation prompt                        |
+
+### Presets
+
+Presets allow you to define tables to exclude during restore:
+
+```
+molniya preset add <NAME>
+molniya preset edit <NAME>
+molniya preset list
+molniya preset remove <NAME>
+``` 
+
+*   `add`: interactively create a new preset
+*   `edit`: edit an existing preset
+*   `list`: show all presets
+*   `remove`: delete a preset
+
+Flags
+-----
+
+*   `--dry-run` – preview restore without executing SQL
+*   `--yes` – confirm restore automatically (non-interactive)
+*   `-h, --help` – show help
+
+Examples
+--------
+
+### 1\. Basic Restore
+```
+molniya restore path/to/folder/of/sql.qz --db mydb
+```
+
+### 2\. Restore With Preset
+```
+molniya restore path/to/folder/of/sql.qz --db mydb --preset mypreset
+```
+
+### 3\. Dry Run
+```
+molniya restore path/to/folder/of/sql.qz --db mydb --preset mypreset --dry-run
+```
+
+### 4\. Non-Interactive Restore
+```
+molniya restore path/to/folder/of/sql.qz --db mydb --preset mypreset --yes
+```
+
+### 5\. Preset Management
+```
+molniya preset add mypreset
+molniya preset list
+molniya preset edit mypreset
+molniya preset remove mypreset
+```
+
+Development
+-----------
+
+### Build
+```
+cargo build --release
+```
+
+### Run Locally
+```
+cargo run -- restore path/to/folder/of/sql.qz --db mydb
+```
+
+### Dependencies
+
+*   Rust >= 1.70
+*   MySQL server or compatible (MariaDB, Percona)
+*   .sql.gz backups
