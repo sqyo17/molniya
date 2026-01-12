@@ -15,11 +15,16 @@ pub enum Commands {
         db: String,
         #[arg(long)]
         preset: Option<String>,
+        #[arg(long)]
+        dry_run: bool,
+        #[arg(long)]
+        yes: bool,
     },
     Preset {
         #[command(subcommand)]
         action: PresetCommand,
     },
+    Doctor,
 }
 
 #[derive(Subcommand)]
