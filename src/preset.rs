@@ -19,7 +19,6 @@ pub fn handle(action: crate::cli::PresetCommand) -> Result<()> {
         crate::cli::PresetCommand::Remove { name } => {
             remove_preset(name)?;
         }
-        _ => unimplemented!("Command not yet implemented"),
     }
     Ok(())
 }
@@ -28,14 +27,6 @@ pub fn save_preset(name: String, preset: Preset) -> Result<()> {
     let mut cfg = load_config()?;
     cfg.presets.insert(name, preset);
     save_config(&cfg)
-}
-
-pub fn load_preset(name: &str) -> Result<Preset> {
-    let cfg = load_config()?;
-    cfg.presets
-        .get(name)
-        .cloned()
-        .ok_or_else(|| anyhow::anyhow!("Preset '{}' not found", name))
 }
 
 fn add_preset(name: String) -> anyhow::Result<()> {

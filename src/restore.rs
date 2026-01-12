@@ -10,7 +10,6 @@ use std::path::{Path, PathBuf};
 #[derive(Default)]
 struct RestoreStats {
     restored: usize,
-    skipped: usize,
     failed: usize,
 }
 
