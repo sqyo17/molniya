@@ -32,3 +32,13 @@ pub fn save_config(cfg: &RestoreConfig) -> anyhow::Result<()> {
     fs::write(path, serde_json::to_string_pretty(cfg)?)?;
     Ok(())
 }
+
+pub fn ensure_config_writable() -> anyhow::Result<()> {
+    let path = config_path();
+
+    if let Some(dir) = path.parent() {
+        fs::create_dir_all(dir)?;
+    }
+
+    Ok(())
+}
