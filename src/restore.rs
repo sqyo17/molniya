@@ -22,6 +22,7 @@ pub fn handle(
     dry_run: bool,
     yes: bool,
 ) -> Result<()> {
+    // Test connection
     test_connection()?;
 
     // 0. Check backup format
