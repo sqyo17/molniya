@@ -2,7 +2,7 @@
 
 **Molniya** is a Rust-based CLI tool for restoring MySQL database backups with support for:
 
-- `.sql.gz` backups
+- Zipped or folder contains `.sql.gz` backups
 - Table exclusion presets
 - Dry-run mode for safe preview
 - Safety confirmation via `--yes`
