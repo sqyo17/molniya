@@ -64,7 +64,8 @@ molniya <COMMAND> [OPTIONS]
 
 Restore a MySQL database from a backup folder:
 ```
-molniya restore <BACKUP\_FOLDER> --db <DB\_NAME> \[--preset <PRESET>\] \[--dry-run\] \[--yes\]
+molniya restore <BACKUP_FOLDER or ZIP_FILE> --db <DB_NAME> 
+[--preset <PRESET>] [--dry-run] [--yes]
 ``` 
 
 Option
