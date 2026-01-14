@@ -20,7 +20,7 @@ It is designed for **database administrators, developers, and automation scripts
 ## Installation
 
 ### Option 1: Install from Prebuilt Binary
-
+Download the binary from [release](https://github.com/sqyo17/molniya/releases)
 ```bash
 chmod +x molniya
 sudo install -m 755 molniya /usr/local/bin/molniya
