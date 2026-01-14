@@ -19,7 +19,14 @@ It is designed for **database administrators, developers, and automation scripts
 
 ## Installation
 
-### From Source
+### Option 1: Install from Prebuilt Binary
+
+```bash
+chmod +x molniya
+sudo install -m 755 molniya /usr/local/bin/molniya
+```
+
+### Option 2: Build from Source
 
 ```bash
 git clone https://github.com/sqyo17/molniya.git
